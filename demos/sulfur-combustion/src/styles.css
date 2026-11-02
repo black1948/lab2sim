@@ -1,0 +1,509 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172229;
+  background: #dfe5e6;
+  font-synthesis: none;
+  --ink: #172229;
+  --muted: #607077;
+  --line: #c6d0d2;
+  --panel: #f7f9f8;
+  --panel-strong: #ffffff;
+  --chrome: #19262c;
+  --cyan: #168aa0;
+  --cyan-soft: #d8eef1;
+  --green: #27785b;
+  --red: #b6434d;
+  --amber: #b87a1d;
+  --bench: #c7d0cc;
+}
+
+* { box-sizing: border-box; letter-spacing: 0; }
+body { margin: 0; min-width: 320px; min-height: 100vh; overflow-x: hidden; }
+button { font: inherit; }
+button:focus-visible, [tabindex="0"]:focus-visible { outline: 3px solid #f0a72f; outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+.lab-shell { min-height: 100vh; display: grid; grid-template-rows: 64px minmax(0, 1fr) auto auto; background: #e8edee; }
+.topbar { height: 64px; display: grid; grid-template-columns: 40px minmax(180px, 1fr) minmax(120px, 220px) auto 40px 40px 40px; gap: 12px; align-items: center; padding: 8px 16px; background: var(--chrome); color: #f5f8f7; border-bottom: 1px solid #0d171b; }
+.experiment-heading { min-width: 0; }
+.experiment-heading h1 { margin: 1px 0 0; overflow: hidden; font-size: 16px; line-height: 1.3; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.kicker { display: block; color: #789099; font: 650 10px/1.25 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; }
+.topbar .kicker { color: #91aab2; }
+.icon-button { width: 38px; height: 38px; display: inline-grid; place-items: center; flex: 0 0 auto; border: 1px solid #425158; border-radius: 5px; color: inherit; background: #24343b; cursor: pointer; font-size: 19px; line-height: 1; }
+.icon-button:hover { background: #30454d; }
+.icon-button.motion-toggle { width: auto; min-width: 44px; padding: 0 9px; font-size: 12px; font-weight: 650; }
+.icon-button.motion-toggle[aria-pressed="false"] { opacity: .62; }
+.progress-block { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 9px; color: #ccd8db; font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.progress-track { height: 5px; overflow: hidden; border-radius: 3px; background: #3d4d53; }
+.progress-track span { display: block; width: 0; height: 100%; background: #59c7b4; transition: width .25s ease; }
+.status-badge, .model-badge, .count { display: inline-flex; align-items: center; min-height: 24px; padding: 4px 8px; border-radius: 4px; font: 650 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+.status-badge { color: #dce8ea; border: 1px solid #4b5e65; background: #26373e; }
+.status-badge.success { color: #cbf2df; border-color: #3e7f68; background: #214e40; }
+
+.lab-grid { min-height: 0; display: grid; grid-template-columns: 220px minmax(480px, 1fr) 260px; }
+.stockroom, .inspector { min-width: 0; overflow: auto; padding: 18px 14px; background: var(--panel); }
+.stockroom { border-right: 1px solid var(--line); }
+.inspector { border-left: 1px solid var(--line); }
+.panel-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 0 2px 14px; }
+.panel-heading h2 { margin: 3px 0 0; font-size: 15px; line-height: 1.25; }
+.count { color: #465a62; background: #e4e9e9; }
+.inventory { display: grid; gap: 5px; }
+.inventory-item { width: 100%; min-height: 68px; display: grid; grid-template-columns: 54px minmax(0, 1fr); align-items: center; gap: 9px; padding: 6px 8px; text-align: left; color: var(--ink); border: 1px solid transparent; border-radius: 6px; background: transparent; cursor: pointer; }
+.inventory-item:hover { background: #edf2f2; }
+.inventory-item.is-selected { border-color: #76aeb8; background: var(--cyan-soft); }
+/* 分步领取三态: 暂存(收在器材柜, 虚线边框示意"不在台上"), 本步需要(绿色引导), 已用完(灰化) */
+.inventory-item.is-stored { border-style: dashed; border-color: #9fb4ba; }
+.inventory-item.is-stored .inventory-preview { opacity: .55; }
+.inventory-item.is-stored .inventory-status { color: #8a5d16; }
+.inventory-item.is-needed { border-color: #74b891; background: #ecf6ef; }
+.inventory-item.is-needed .inventory-status { color: #1f7a55; }
+.inventory-item em.inventory-status { display: block; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; font-style: normal; }
+.inventory-preview { width: 50px; height: 54px; overflow: visible; }
+/* 预览是器材"证件照": 标签与读数/徽标类文本在图标尺寸下不可读, 且会撑大自适应包围盒, 统一隐藏(app.js 按 getBBox 重设 viewBox) */
+.inventory-preview .apparatus-label,
+.inventory-preview .cart-readout,
+.inventory-preview .metronome-readout,
+.inventory-preview .angle-label,
+.inventory-preview .tick-badge,
+.inventory-preview .verified-badge { display: none; }
+.inventory-item span { min-width: 0; }
+.inventory-item strong, .inventory-item small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.inventory-item strong { font-size: 12px; }
+.inventory-item small { margin-top: 4px; color: var(--muted); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+.bench-panel { min-width: 0; min-height: 0; display: grid; grid-template-rows: auto minmax(420px, 1fr); background: #d9e0e1; }
+.bench-toolbar { min-height: 58px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 10px 18px; background: #f2f5f4; border-bottom: 1px solid var(--line); }
+.bench-toolbar p { margin: 3px 0 0; color: #34474f; font-size: 13px; }
+.model-badge { color: #39545d; border: 1px solid #bcc9cc; background: #e4eaeb; }
+.stage-wrap { position: relative; min-height: 420px; overflow: hidden; }
+.stage { width: 100%; height: 100%; display: block; touch-action: none; user-select: none; }
+.room-wall { fill: #eef2f1; }
+.wall-line { fill: none; stroke: #d7dfe0; stroke-width: 2; }
+.bench-back { fill: var(--bench); }
+.bench-edge { fill: none; stroke: #82938e; stroke-width: 4; }
+.toast { position: absolute; left: 18px; bottom: 16px; max-width: min(560px, calc(100% - 36px)); padding: 9px 12px; border: 1px solid #aebbbd; border-radius: 6px; color: #24343a; background: rgb(249 251 250 / 92%); box-shadow: 0 5px 18px rgb(26 42 48 / 10%); font-size: 12px; }
+.toast.is-error { color: #7d2730; border-color: #da959b; background: #fff1f2; }
+/* 反馈清空(如"移开薄膜"的空反馈)时隐藏空气泡, 不留白壳 */
+.toast:empty { display: none; }
+.failure { position: absolute; top: 14px; right: 14px; max-width: 360px; margin: 0; padding: 10px 12px; color: #772932; border: 1px solid #d4868e; border-radius: 6px; background: #fff0f1; font-size: 12px; }
+
+.apparatus { cursor: pointer; transition: filter .15s ease; }
+.apparatus.draggable { cursor: grab; }
+.apparatus.draggable:active { cursor: grabbing; }
+.apparatus.selected { filter: drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 7px #168aa0); }
+.apparatus-shadow { fill: rgb(45 58 62 / 18%); filter: blur(1px); pointer-events: none; }
+.glass-body { fill: rgb(221 245 249 / 35%); stroke: #41626b; stroke-width: 2; stroke-linejoin: round; }
+.glass-rim { fill: none; stroke: #34545e; stroke-width: 2.3; stroke-linecap: round; }
+.glass-highlight { fill: none; stroke: rgb(255 255 255 / 80%); stroke-width: 3; stroke-linecap: round; }
+.liquid { opacity: .78; stroke: none; }
+.meniscus { fill: none; stroke: rgb(34 85 98 / 60%); stroke-width: 1.4; }
+.measure-marks { fill: none; stroke: #55727a; stroke-width: 1; }
+.apparatus-label { fill: #293a40; paint-order: stroke; stroke: rgb(241 245 244 / 90%); stroke-width: 5px; stroke-linejoin: round; font: 650 13px/1 ui-sans-serif, system-ui, sans-serif; pointer-events: none; }
+.stand { fill: none; stroke: #68777a; stroke-width: 6; stroke-linecap: round; }
+.clamp { fill: none; stroke: #7b8586; stroke-width: 5; stroke-linecap: round; }
+.valve-hub { fill: #d3dde0; stroke: #344f57; stroke-width: 2; }
+.valve-handle { fill: none; stroke: #b84b53; stroke-width: 5; stroke-linecap: round; transform-origin: 0 62px; transform: rotate(0deg); transition: transform .2s ease; }
+.valve-open .valve-handle { transform: rotate(90deg); }
+.falling-drop { animation: drip 1s linear infinite; }
+.rubber { fill: #bc4d58; stroke: #71313a; stroke-width: 2; }
+.amber-glass { fill: rgb(191 137 55 / 24%); }
+.cap { fill: #33434a; stroke: #1d2b30; stroke-width: 2; }
+.bottle-label { fill: #f5f1df; stroke: #b7ad8e; stroke-width: 1; }
+.bottle-label-text { fill: #394347; font: 650 8px/1 ui-sans-serif, system-ui, sans-serif; }
+.metal { fill: #b4c0c2; stroke: #5b6a6d; stroke-width: 2; }
+.fallback-body { fill: #d8e7e9; stroke: #49636b; stroke-width: 2; }
+
+/* Chemistry extension apparatus (code-native, builtin) */
+.filter-paper { opacity: .92; }
+.residue { opacity: .85; }
+.scale-case { fill: #cdd5d6; stroke: #5b6a6d; stroke-width: 2; }
+.scale-vent { fill: #aab7b9; stroke: #7b8a8d; stroke-width: 1; }
+.scale-pan { fill: #d9dfe0; stroke: #5b6a6d; stroke-width: 2; }
+.scale-pan-top { fill: #c3cdcf; stroke: #6d7c7f; stroke-width: 1; }
+.scale-button { fill: #e8eeee; stroke: #7b8a8d; stroke-width: 1; }
+.scale-button.alt { fill: #9fb4ae; stroke: #5f7570; }
+.lcd-screen { fill: #12331f; stroke: #0b2415; stroke-width: 1; }
+.lcd-text { fill: #6cf59a; font: 700 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.lcd-unit { fill: #4fd57e; font: 650 8px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.paper-sheet { fill: #f4f2ea; stroke: #c9c4b4; stroke-width: 1; }
+.paper-rim { fill: #fffdf6; stroke: #d8d3c2; stroke-width: 1; }
+.salt-grain { opacity: .9; }
+/* 分液漏斗 + 导管(07 案例 code-native 扩展) */
+.tube-glass { fill: none; stroke: #8fa9b2; stroke-width: 4; stroke-linecap: round; }
+.tube-highlight { fill: none; stroke: rgb(255 255 255 / 60%); stroke-width: 1.2; stroke-linecap: round; }
+.tube-flow { fill: none; stroke: #d9ecef; stroke-width: 2.4; stroke-dasharray: 5 11; animation: tube-flow-anim .9s linear infinite; }
+.tube-bubble { fill: rgb(255 255 255 / 80%); stroke: #9db4bc; stroke-width: .6; opacity: 0; animation: tube-bubble-anim 1.4s ease-in infinite; }
+@keyframes tube-flow-anim { to { stroke-dashoffset: -32; } }
+@keyframes tube-bubble-anim { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: .9; } 100% { transform: translateY(-16px); opacity: 0; } }
+/* 石灰水变浑浊: 乳白化过渡(fill/opacity 由 .is-turbid 落地时插值; 目标色接近视频显著乳白, 与初始淡蓝 #e6f0f7 拉开差距) */
+.is-turbid .liquid { fill: #f4f4ea; opacity: 1; transition: fill 2.5s ease, opacity 2.5s ease; }
+.crystal { opacity: .95; }
+.stand-base { fill: #2e383b; stroke: #172023; stroke-width: 2; }
+.clamp-knob { fill: #8a7a4f; stroke: #5c5133; stroke-width: 1.5; }
+.candle-wax { fill: #f4ecd8; stroke: #d3c39c; stroke-width: 1.2; stroke-linejoin: round; }
+.candle-drip { fill: none; stroke: #eee3c6; stroke-width: 2.2; stroke-linecap: round; }
+.candle-wick { fill: #42392b; }
+.stand-sheet { fill: #b7c6c9; stroke: #64777b; stroke-width: 1.6; stroke-linejoin: round; }
+.stand-sheet-edge { fill: none; stroke: rgb(255 255 255 / 65%); stroke-width: 1; }
+.glass-plate-edge { stroke-linecap: round; }
+.lighter-body { fill: #c9584f; stroke: #8f3b34; stroke-width: 1.6; stroke-linejoin: round; }
+.lighter-cap { fill: #b9c8cc; stroke: #64777b; stroke-width: 1.4; }
+.lighter-wheel { fill: #8fa0a4; stroke: #5c6c70; stroke-width: 1.2; }
+.gas-layer, .gas-layer-top { pointer-events: none; }
+.iron-ring { fill: none; stroke: #3d4a4d; stroke-width: 4.5; }
+.iron-ring-rim { opacity: .6; }
+.ceramic { fill: #f6f8f8; stroke: #9aa7aa; stroke-width: 2; stroke-linejoin: round; }
+.ceramic-rim { opacity: .9; }
+.ceramic-crystals { stroke-linejoin: round; }
+.lamp-tank { stroke-linejoin: round; }
+.lamp-collar { opacity: .9; }
+.wick { fill: #efe6d2; stroke: #c9b98f; stroke-width: .8; }
+
+/* Physics apparatus palette */
+.metal-bracket { fill: #b4c0c2; stroke: #5b6a6d; stroke-width: 2; stroke-linejoin: round; }
+.metal-bracket-hook { fill: none; stroke: #5b6a6d; stroke-width: 2.4; stroke-linecap: round; }
+.screw { fill: #5b6a6d; }
+.weight-body { fill: #8fa3ab; stroke: #46575f; stroke-width: 2; stroke-linejoin: round; }
+.weight-top { fill: #c7d3d8; stroke: #46575f; stroke-width: 1.5; }
+.weight-hook { fill: none; stroke: #46575f; stroke-width: 2; stroke-linecap: round; }
+.force-label { fill: #b6434d; font: 650 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.string-line { fill: none; }
+.scale-markings { fill: none; stroke: #55727a; stroke-width: 1; }
+.scale-window { fill: #f4f9fa; stroke: #41626b; stroke-width: 1.5; }
+.scale-hook { fill: none; stroke: #46575f; stroke-width: 2; stroke-linecap: round; }
+.scale-reading { fill: #17323a; font: 650 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.pulley-wheel { fill: #cfd9db; stroke: #46575f; stroke-width: 2; }
+.pulley-axle { fill: #5b6a6d; }
+.physics-board { fill: #f2f0e6; stroke: #8a8570; stroke-width: 2; }
+.grid-line { stroke: #ddd8c6; stroke-width: 1; }
+.angle-label { fill: #3070d0; font: 650 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+/* 06-三角桁架: 支杆式弹簧测力计(木管+刻度套管+红环)与桁架支架 */
+.strut-tube { fill: #a8703f; stroke: #6e4526; stroke-width: 1.6; }
+.strut-grain { stroke: #c08a55; stroke-width: 1; }
+.strut-tube-end { fill: #5d3c20; }
+.strut-window { fill: #f7ecd9; stroke: #6e4526; stroke-width: 1; }
+.strut-coil { stroke: #7a7f85; stroke-width: 1.2; }
+.strut-sleeve { fill: #d9dcdd; stroke: #7d8a8e; stroke-width: 1.2; }
+.strut-band { fill: #d8402e; }
+.strut-cap { fill: #2e3538; }
+.strut-inner { fill: #f3d9a4; stroke: #b09355; stroke-width: 0.8; }
+.strut-tick { stroke: #8a6a2f; stroke-width: 1.2; }
+.strut-hold-rod { fill: #9aa6aa; }
+.strut-hold-ring { fill: none; stroke: #9aa6aa; stroke-width: 1.6; }
+.truss-column { fill: #b4c0c2; stroke: #5b6a6d; stroke-width: 2; }
+.plumb-line { stroke: #8a9aa5; stroke-width: 1.2; stroke-dasharray: none; }
+.plumb-vane { fill: #8a9aa5; }
+.gauge-note { font: 650 10.5px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.gauge-note-tension { fill: #c0392b; }
+.gauge-note-compression { fill: #2471a3; }
+.protractor-body { fill: rgb(255 255 255 / 65%); }
+.slope-body { fill: #d9c9a3; stroke: #8a7a4f; stroke-width: 2; stroke-linejoin: round; }
+.slope-surface { fill: none; stroke: #6b5c33; stroke-width: 2.5; stroke-linecap: round; }
+.slope-base { fill: none; stroke: #6b5c33; stroke-width: 2; }
+.slope-back { fill: none; stroke: #9a8a5c; stroke-width: 1.5; }
+.ball-body { fill: #c9773a; stroke: #7a4620; stroke-width: 2; }
+.ball-highlight { fill: rgb(255 255 255 / 45%); }
+.stop-board { fill: #a8b6ba; stroke: #46575f; stroke-width: 2; stroke-linejoin: round; }
+.stop-board-face { fill: #c7d3d8; }
+
+/* 24-匀加速直线运动: 节拍器/斜面/小车/小旗 */
+.metronome-body { fill: #b9854a; stroke: #7c5628; stroke-width: 2; stroke-linejoin: round; }
+.metronome-base { fill: #8a6534; stroke: #6b4c22; stroke-width: 1.6; }
+.metronome-slot { fill: #3a2c1c; }
+.metronome-readout { fill: #46575f; font: 650 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-anchor: middle; pointer-events: none; }
+.pendulum-rod { stroke: #e8dcb8; stroke-width: 3; stroke-linecap: round; }
+.slider-weight { fill: #46575f; stroke: #2c3a41; stroke-width: 1.4; }
+.pendulum-bob { fill: #e8dcb8; stroke: #a89468; stroke-width: 1.2; }
+.tick-flash { fill: #f6c453; stroke: #b87a1d; stroke-width: 1.6; }
+.tick-flash-text { fill: #5c3d0e; font: 700 11px/1 Inter, system-ui, sans-serif; text-anchor: middle; }
+.incline-track { fill: #c9a06a; stroke: #8a6534; stroke-width: 1.6; }
+.incline-surface { stroke: #eadfc8; stroke-width: 2; }
+.incline-leg { fill: #a37b46; stroke: #7c5628; stroke-width: 1.4; }
+.incline-base { fill: #8a6534; stroke: #6b4c22; stroke-width: 1.4; }
+.cart-body { fill: #2f7d5c; stroke: #1d5940; stroke-width: 1.8; }
+.cart-stripe { fill: #eadfc8; }
+.cart-wheel { fill: #33424a; stroke: #1d2a30; stroke-width: 1.6; }
+.cart-hub { fill: #c9d4d8; }
+.cart-axle { stroke: #1d2a30; stroke-width: 2.4; }
+.cart-readout { fill: #1d5940; font: 650 12.5px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-anchor: middle; pointer-events: none; }
+.tick-badge { fill: #fdeeb8; stroke: #b87a1d; stroke-width: 1.6; }
+.tick-badge-text { fill: #7a5210; font: 700 12px/1 Inter, system-ui, sans-serif; text-anchor: middle; }
+.verified-badge { fill: #d8f2df; stroke: #2e7d5b; stroke-width: 1.6; }
+.verified-badge-text { fill: #1d5940; font: 700 12px/1 Inter, system-ui, sans-serif; text-anchor: middle; }
+.flag-pole { stroke: #46575f; stroke-width: 3; stroke-linecap: round; }
+.flag-pennant { fill: #d03030; stroke: #9c1f1f; stroke-width: 1.4; stroke-linejoin: round; }
+.flag-foot { fill: #46575f; }
+.flag-confirmed { fill: #2e7d5b; font: 700 13px/1 Inter, system-ui, sans-serif; text-anchor: middle; }
+@keyframes arrow-draw { from { opacity: 0; } }
+.force-arrow-line { animation: arrow-draw .25s ease-out; }
+
+/* 01-布氏硬度测试: 数显硬度计/升降工作台/球压头/试样/测量显微镜 */
+.brinell-base { fill: #3c4a52; stroke: #26313a; stroke-width: 2.5; }
+.brinell-body { fill: #5d6f78; stroke: #38474f; stroke-width: 2.5; }
+.brinell-body-top { fill: #7b8d96; stroke: #38474f; stroke-width: 2; }
+.brinell-arm { fill: #52646d; stroke: #38474f; stroke-width: 2.5; }
+.brinell-nose { fill: #8fa2ab; stroke: #38474f; stroke-width: 2; }
+.brinell-panel { fill: #22313a; stroke: #141d23; stroke-width: 1.5; }
+.brinell-lcd { fill: #12331f; stroke: #0b2415; stroke-width: 1; }
+.brinell-lcd-text { fill: #6cf59a; font: 700 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-anchor: middle; pointer-events: none; }
+.brinell-readout { fill: #dcebe9; font: 650 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-anchor: middle; pointer-events: none; }
+.brinell-hb { fill: #ffd479; font: 700 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-anchor: middle; pointer-events: none; }
+.brinell-led { fill: #5a6a68; stroke: #3c4a48; stroke-width: 1.2; }
+.brinell-led-on { fill: #ff5d5d; stroke: #a83232; stroke-width: 1.2; animation: led-glow 1.4s ease-in-out infinite; }
+.brinell-button { fill: #e8eeee; stroke: #7b8a8d; stroke-width: 1; }
+.table-base { fill: #3c4a52; stroke: #26313a; stroke-width: 2.5; }
+.table-column { fill: #7b8d96; stroke: #46575f; stroke-width: 2; }
+.table-wheel { fill: #c9d4d8; stroke: #46575f; stroke-width: 2; }
+.table-anvil { fill: #b4c0c2; stroke: #5b6a6d; stroke-width: 2; }
+.indenter-ball { fill: #d9e2e6; stroke: #5b6a6d; stroke-width: 1.8; }
+.indenter-shank { fill: #9fb0b8; stroke: #46575f; stroke-width: 1.6; }
+.indenter-cap { fill: #6d7f88; stroke: #46575f; stroke-width: 1.4; }
+.specimen-body { fill: #aebac0; stroke: #46575f; stroke-width: 2; }
+.specimen-top { fill: #cfd9dd; stroke: #5b6a6d; stroke-width: 1.5; }
+.indent-ring { fill: none; stroke: #6a7a80; stroke-width: 1; opacity: .85; pointer-events: none; }
+.indent-dot { fill: #3a474d; pointer-events: none; }
+.scope-base { fill: #3c4a52; stroke: #26313a; stroke-width: 2; }
+.scope-column { fill: #8fa2ab; stroke: #46575f; stroke-width: 2; }
+.scope-head { fill: #52646d; stroke: #38474f; stroke-width: 2; }
+.scope-arm { fill: #52646d; stroke: #38474f; stroke-width: 2; }
+.scope-eyepiece { fill: #2c3840; stroke: #1c262c; stroke-width: 1.6; }
+.scope-barrel { fill: #2c3840; stroke: #1c262c; stroke-width: 2; }
+.scope-objective { fill: #9fb0b8; stroke: #46575f; stroke-width: 1.5; }
+.scope-reticle { fill: none; stroke: #f0a72f; stroke-width: 1.6; stroke-dasharray: 4 3; pointer-events: none; }
+.scope-reading { fill: #17323a; font: 650 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-anchor: middle; pointer-events: none; }
+
+/* 29-集成运算放大电路: 实验箱/芯片/电阻/导线/万用表/表笔/插座区 */
+.circuit-chassis { fill: #3a4750; stroke: #26313a; stroke-width: 3; }
+.circuit-face { fill: #e9eeee; stroke: #c3cccc; stroke-width: 1.5; }
+.circuit-band { fill: #50828a; }
+.circuit-title { fill: #f2f7f7; font: 650 15px/1 Inter, system-ui, sans-serif; }
+.circuit-region { fill: #f2f6f5; stroke: #cdd8d6; stroke-width: 1; }
+.circuit-socket { fill: #dfe5e4; stroke: #9fb0ad; stroke-width: 1.6; }
+.circuit-jack { fill: #f6f8f7; stroke: #5b6a6d; stroke-width: 1.6; }
+.circuit-trace { stroke: #8a9a97; stroke-width: 1.6; }
+.circuit-screw { fill: #b6c2c4; stroke: #7f8f92; stroke-width: 1; }
+.circuit-silk { fill: #6a7a78; font: 500 7.5px/1 Inter, system-ui, sans-serif; pointer-events: none; }
+.dip-body { fill: #2c3440; stroke: #1c232c; stroke-width: 1.6; stroke-linejoin: round; }
+.dip-notch { fill: #1c232c; }
+.dip-dot { fill: #dfe6ea; }
+.dip-silk { fill: #dfe6ea; font: 700 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.dip-silk-sub { fill: #8fa0ad; font: 650 6.5px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.dip-pin { fill: #c9d2d6; stroke: #8a979e; stroke-width: .6; }
+.dip-num { fill: #5b6a6d; font: 650 7px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.dip-func { fill: #3070d0; font: 650 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.dip-badge { fill: #fde3e5; stroke: #b6434d; stroke-width: 1.4; }
+.dip-badge-text { fill: #7d2730; font: 700 10px/1 Inter, system-ui, sans-serif; text-anchor: middle; }
+.resistor-body { fill: #d9b98a; stroke: #a8865a; stroke-width: 1.4; }
+.resistor-lead { stroke: #8a939a; stroke-width: 2.6; stroke-linecap: round; }
+.resistor-tol { opacity: .9; }
+.lead-wire-red { stroke: #c0392b; stroke-width: 4; stroke-linecap: round; }
+.lead-wire-black { stroke: #26313a; stroke-width: 4; stroke-linecap: round; }
+.lead-wire-blue { stroke: #3465c0; stroke-width: 4; stroke-linecap: round; }
+.lead-plug { fill: #dfe6ea; stroke: #5b6a6d; stroke-width: 1.4; }
+.lead-pin { fill: #b6c2c4; stroke: #5b6a6d; stroke-width: 1; }
+.dmm-body { fill: #f2b632; stroke: #b7831c; stroke-width: 2; }
+.dmm-face { fill: #263238; }
+.dmm-lcd { fill: #1a2f24; stroke: #0d1f16; stroke-width: 1; }
+.dmm-text { fill: #6cf59a; font: 700 15px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.dmm-unit { fill: #4fd57e; font: 650 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.dmm-mode { fill: #9fb3ba; font: 650 8px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.dmm-dial { fill: #37474f; stroke: #1c262b; stroke-width: 1.6; }
+.dmm-dial-ring { stroke: #90a4ae; stroke-width: 1; }
+.dmm-pointer { stroke: #f2f7f7; stroke-width: 2.4; stroke-linecap: round; }
+.dmm-hub { fill: #90a4ae; }
+.dmm-jack-red { fill: #c0392b; stroke: #7e241a; stroke-width: 1.6; }
+.dmm-jack-black { fill: #26313a; stroke: #10181d; stroke-width: 1.6; }
+.dmm-jack-label { fill: #6d5a12; font: 650 6.5px/1 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+.probe-tip { stroke: #c9d2d6; stroke-width: 3; stroke-linecap: round; }
+.probe-grip { stroke: #1c232c; stroke-width: 1.2; }
+.probe-body { fill: #2c3440; stroke: #1c232c; stroke-width: 1.4; }
+.probe-stripe { opacity: .95; }
+.probe-wire { stroke-linecap: round; fill: none; }
+.zone-pad { fill: #f6f8f7; stroke: #7f9490; stroke-width: 1.8; }
+.zone-pad.zone-occupied { stroke: #3e9b6e; stroke-width: 2.4; }
+.zone-bus { fill: #dfe4ea; stroke: #5b6a6d; stroke-width: 1.8; }
+.zone-bus.zone-occupied { stroke: #3e9b6e; stroke-width: 2.4; }
+.zone-title { fill: #33504c; font: 650 11px/1 Inter, system-ui, sans-serif; pointer-events: none; }
+.zone-sub { fill: #6a7a78; font: 500 8px/1 Inter, system-ui, sans-serif; pointer-events: none; }
+.jack { fill: #ffffff; stroke: #5b6a6d; stroke-width: 1.6; }
+.post-red { fill: #c0392b; stroke: #7e241a; stroke-width: 1.8; }
+.post-navy { fill: #2c3e6e; stroke: #1a2646; stroke-width: 1.8; }
+.post-amber { fill: #d68910; stroke: #8a5a0a; stroke-width: 1.8; }
+.led { fill: #5a6a68; stroke: #3c4a48; stroke-width: 1.2; }
+.led-on { fill: #ff5d5d; stroke: #a83232; stroke-width: 1.2; }
+@keyframes led-glow { 50% { opacity: .7; } }
+.led-on { animation: led-glow 1.4s ease-in-out infinite; }
+.zone-knob { fill: #dfe5e4; stroke: #5b6a6d; stroke-width: 1.6; }
+.zone-knob-pointer { stroke: #26313a; stroke-width: 2.2; stroke-linecap: round; }
+.probe-ring { stroke: #f0a72f; stroke-width: 2.4; stroke-dasharray: 5 4; }
+.gnd-glyph { stroke: #26313a; stroke-width: 2.4; stroke-linecap: round; }
+
+/* Biology apparatus palette */
+.petri-dish-base { fill: rgb(228 236 238 / 92%); stroke: #8fa8b0; stroke-width: 1.5; }
+.lamp-base { fill: #b9c4c6; stroke: #6d7a7d; stroke-width: 1.5; }
+.burner-base { fill: #aeb8ba; stroke: #5f6d70; stroke-width: 1.5; }
+@keyframes flame-flicker {
+  0%, 100% { transform: scaleY(1) translateY(0); opacity: 1; }
+  30% { transform: scaleY(1.08) translateY(-1px); opacity: .92; }
+  60% { transform: scaleY(.94) translateY(1px); opacity: 1; }
+}
+.flame-outer, .flame-inner, .flame-core, .bunsen-flame-outer, .bunsen-flame-inner, .bunsen-flame-core {
+  transform-box: fill-box; transform-origin: 50% 100%;
+  animation: flame-flicker .9s ease-in-out infinite;
+}
+.flame-inner, .bunsen-flame-inner { animation-duration: .7s; }
+.flame-core, .bunsen-flame-core { animation-duration: .55s; }
+@keyframes glow-pulse { 50% { opacity: .85; } }
+.sterile-glow, .sterile-heat, .sterile-heat-outer, .uv-active, .warm-glow { animation: glow-pulse 1.2s ease-in-out infinite; }
+@keyframes colony-pop { from { transform: scale(0); opacity: 0; } }
+.colony { transform-box: fill-box; transform-origin: 50% 50%; animation: colony-pop .5s ease-out; }
+.snap-zone ellipse { fill: rgb(56 164 143 / 12%); stroke: #318d7c; stroke-width: 2; stroke-dasharray: 7 5; animation: zone-pulse 1.5s ease-in-out infinite; }
+.snap-zone text { fill: #287462; font: 650 12px ui-sans-serif, system-ui, sans-serif; pointer-events: none; }
+@keyframes drip { from { transform: translateY(-5px); opacity: 0; } 25% { opacity: 1; } to { transform: translateY(20px); opacity: 0; } }
+@keyframes zone-pulse { 50% { opacity: .55; } }
+@keyframes bubble-rise {
+  0% { transform: translate(0, 0) scale(.4); opacity: 0; }
+  20% { opacity: .85; }
+  70% { opacity: .7; }
+  100% { transform: translate(var(--x, 0px), -40px) scale(1.15); opacity: 0; }
+}
+@keyframes reaction-shake { 0%, 100% { translate: 0 0; } 25% { translate: .8px -1px; } 50% { translate: -.9px .8px; } 75% { translate: .6px 1px; } }
+.reacting { animation: reaction-shake .55s ease-in-out infinite; }
+.reacting.changing { animation-duration: .4s; }
+.reacting.settling { animation-duration: .8s; }
+.reaction-layer { pointer-events: none; }
+.reaction-bubble { fill: none; stroke: rgb(240 250 250 / 85%); stroke-width: 1.6; stroke-linecap: round; animation: bubble-rise var(--d, .5s) ease-in infinite; }
+
+/* Pour / transfer overlay animations (code-native, state-driven) */
+#fx-overlay { pointer-events: none; }
+.fx-water { fill: none; stroke: #8fc7db; stroke-width: 5; stroke-linecap: round; opacity: .9; stroke-dasharray: 12 16; animation: pour-flow .5s linear infinite; }
+@keyframes pour-flow { to { stroke-dashoffset: -56; } }
+.fx-drop { fill: #afd9e6; transform-box: fill-box; transform-origin: 50% 50%; opacity: 0; animation: fx-drop .6s ease-in var(--d, 0s) infinite; }
+@keyframes fx-drop { 0% { opacity: 0; transform: translateY(0); } 25% { opacity: .9; } 100% { opacity: 0; transform: translateY(12px); } }
+.fx-salt { fill: #cfc2a6; stroke: #b3a482; stroke-width: .5; transform-box: fill-box; animation: fx-fall .62s cubic-bezier(.3, .4, .6, 1) var(--d, 0s) forwards; }
+.fx-crystal { fill: #f4f7fa; stroke: #cdd8da; stroke-width: .5; transform-box: fill-box; animation: fx-fall .55s ease-out var(--d, 0s) forwards; }
+@keyframes fx-fall { 0% { opacity: 0; transform: translate(0, 0); } 14% { opacity: .95; } 100% { opacity: 0; transform: translate(var(--ox, 6px), var(--oy, 16px)); } }
+
+/* Smooth level / crystal / residue transitions when a scientific value changes */
+.liquid, .ceramic-crystals, .residue, .salt-grain, .crystal { transform-box: fill-box; }
+.apparatus.state-changed .liquid { animation: liquid-pour .6s ease-out; }
+@keyframes liquid-pour { from { transform: translateY(9px); opacity: .15; } 40% { opacity: .85; } }
+.apparatus.state-changed .ceramic-crystals,
+.apparatus.state-changed .residue,
+.apparatus.state-changed .salt-grain,
+.apparatus.state-changed .crystal { animation: crystal-grow .55s ease-out; }
+@keyframes crystal-grow { from { transform: scale(.25); opacity: 0; } 70% { opacity: 1; } }
+
+.empty-state { padding: 18px 2px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.kind-label { display: inline-block; margin-bottom: 14px; padding: 4px 7px; color: #216a78; border-radius: 4px; background: var(--cyan-soft); font: 650 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.readouts { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0; margin: 0; border-top: 1px solid var(--line); }
+.readouts dt, .readouts dd { margin: 0; padding: 10px 0; border-bottom: 1px solid #dce2e3; font-size: 12px; }
+.readouts dt { color: var(--muted); }
+.readouts dd { text-align: right; font-weight: 650; font-variant-numeric: tabular-nums; }
+.properties { margin-top: 16px; }
+.properties div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; color: var(--muted); font-size: 11px; }
+.properties strong { color: var(--ink); text-align: right; }
+
+.tool-dock { min-height: 76px; display: grid; grid-template-columns: minmax(230px, 1fr) minmax(280px, 2fr) auto; align-items: center; gap: 18px; padding: 10px 16px; color: #edf3f3; border-top: 1px solid #0e1a1e; background: var(--chrome); }
+.current-step { min-width: 0; display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 11px; }
+.step-index { color: #74d0bd; font: 650 22px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.current-step h2 { margin: 3px 0 0; overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.context-controls { min-width: 0; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.action-button, .procedure-toggle { min-height: 36px; padding: 8px 13px; border: 1px solid #56676d; border-radius: 5px; color: #e7eeee; background: #293b42; cursor: pointer; font-size: 12px; font-weight: 650; }
+.action-button:hover, .procedure-toggle:hover { background: #364c54; }
+.action-button.primary { color: #102f35; border-color: #73d3c1; background: #73d3c1; }
+.action-button.primary:hover { background: #91dfd0; }
+.control-hint { color: #94a7ad; font-size: 12px; }
+.control-action { padding: 5px 12px; border: 1px solid #557077; border-radius: 5px; background: #2c3e45; color: #cfe0e4; font: 600 12px ui-sans-serif, system-ui, sans-serif; cursor: pointer; }
+.control-action:hover { background: #354b53; }
+/* 当前步骤栏"Apparatus for this step"chips: 暂存态虚线+琥珀色可点击领取, 已消耗灰化 */
+.step-apparatus { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+.apparatus-lead { color: #91aab2; font: 650 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: .04em; }
+.apparatus-chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: 1px solid #557077; border-radius: 999px; background: #26383f; color: #cfe0e4; font: 600 11px ui-sans-serif, system-ui, sans-serif; cursor: default; }
+.apparatus-chip strong { font-weight: 650; }
+.apparatus-chip em { color: #8fa6ad; font-size: 10px; font-style: normal; }
+.apparatus-chip.is-stored { border-style: dashed; border-color: #b98a3a; color: #f4d9a8; cursor: pointer; }
+.apparatus-chip.is-stored em { color: #e3b565; }
+.apparatus-chip.is-stored:hover { background: #33454c; }
+.apparatus-chip.is-consumed { opacity: .45; }
+/* 自动收起提示: 短驻 toast, 悬浮于页面右上(不占布局) */
+.return-toast { position: fixed; z-index: 60; top: 72px; right: 18px; max-width: min(420px, calc(100% - 36px)); padding: 9px 12px; color: #d8e7ea; border: 1px solid #4a6570; border-radius: 6px; background: #1f3138; box-shadow: 0 8px 24px rgb(10 22 27 / 35%); font-size: 12px; }
+.procedure-toggle { white-space: nowrap; }
+.procedure { padding: 10px 16px 16px; color: #e8eeee; background: #223139; border-top: 1px solid #3c4e55; }
+.step-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 6px; }
+.step-list article { min-height: 56px; display: grid; grid-template-columns: 32px 1fr; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid #45575e; border-radius: 5px; background: #293b42; }
+.step-list article > span { color: #9bb0b5; font: 650 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.step-list article strong, .step-list article small { display: block; }
+.step-list article strong { font-size: 11px; }
+.step-list article small { margin-top: 3px; color: #91a7ad; font-size: 9px; }
+.step-list article.complete { border-color: #397d68; background: #24483e; }
+.step-list article.complete > span { color: #70d1b4; }
+/* 阶段标题(procedure[].phase): 整行贯通的分组小标题 */
+.phase-heading { grid-column: 1 / -1; margin: 10px 0 2px; color: #8fb6a8; font: 650 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: .05em; }
+.step-list .phase-heading:first-child { margin-top: 2px; }
+
+.credits-dialog { width: min(620px, calc(100% - 32px)); max-height: calc(100vh - 60px); padding: 0; overflow: hidden; color: var(--ink); border: 1px solid #9eaaad; border-radius: 8px; background: var(--panel-strong); box-shadow: 0 20px 70px rgb(18 31 36 / 30%); }
+.credits-dialog::backdrop { background: rgb(16 28 33 / 58%); }
+.dialog-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 18px; color: #edf3f3; background: var(--chrome); }
+.dialog-heading h2 { margin: 2px 0 0; font-size: 16px; }
+.credits-list { max-height: 60vh; overflow: auto; padding: 8px 18px 18px; }
+.credits-list div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.credits-list span { color: var(--muted); text-align: right; }
+
+.stockroom-collapsed .lab-grid { grid-template-columns: 0 minmax(480px, 1fr) 260px; }
+.stockroom-collapsed .stockroom { visibility: hidden; padding: 0; overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .001ms !important; }
+  /* 循环装饰动画静态化; 一次性科学过程动画(liquid-pour/crystal-grow/fx-fall)保留 */
+  .reacting, .reaction-bubble, .falling-drop,
+  .tube-flow, .tube-bubble,
+  .flame-outer, .flame-inner, .flame-core,
+  .bunsen-flame-outer, .bunsen-flame-inner, .bunsen-flame-core,
+  .snap-zone ellipse, .sterile-glow, .sterile-heat, .sterile-heat-outer,
+  .uv-active, .warm-glow, .colony {
+    animation: none !important;
+  }
+  .fx-water { stroke-dasharray: none; animation: none !important; }
+  .fx-drop { display: none; }
+}
+
+@media (max-width: 940px) {
+  .lab-shell { min-height: auto; grid-template-rows: auto auto auto auto; }
+  .topbar { grid-template-columns: 38px minmax(160px, 1fr) auto 38px 38px 38px; }
+  .progress-block { display: none; }
+  .lab-grid, .stockroom-collapsed .lab-grid { grid-template-columns: 180px minmax(0, 1fr); grid-template-areas: "stock bench" "inspect inspect"; }
+  .stockroom { grid-area: stock; visibility: visible !important; }
+  .bench-panel { grid-area: bench; }
+  .inspector { grid-area: inspect; max-height: 220px; border-top: 1px solid var(--line); border-left: 0; }
+  .stockroom-collapsed .stockroom { display: none; }
+  .stockroom-collapsed .lab-grid { grid-template-columns: 1fr; grid-template-areas: "bench" "inspect"; }
+  .tool-dock { grid-template-columns: 1fr auto; }
+  .context-controls { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; }
+}
+
+@media (max-width: 640px) {
+  .topbar { grid-template-columns: 38px minmax(0, 1fr) 38px 38px 38px; gap: 7px; padding: 7px 10px; }
+  .status-badge { display: none; }
+  .lab-grid, .stockroom-collapsed .lab-grid { grid-template-columns: 1fr; grid-template-areas: "bench" "stock" "inspect"; }
+  .stockroom { grid-area: stock; max-height: 190px; border-top: 1px solid var(--line); border-right: 0; }
+  .inventory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bench-panel { grid-template-rows: auto 360px; }
+  .bench-toolbar { padding: 9px 12px; }
+  .bench-toolbar p { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .model-badge { display: none; }
+  .stage-wrap { min-height: 360px; }
+  .stockroom-collapsed .stockroom { display: none; }
+  .tool-dock { grid-template-columns: 1fr auto; gap: 10px; }
+  .current-step { grid-template-columns: 34px minmax(0, 1fr); }
+  .context-controls { width: 100%; }
+  .action-button { flex: 1 1 130px; }
+  .procedure-toggle { padding-inline: 9px; }
+  .toast { bottom: 10px; left: 10px; max-width: calc(100% - 20px); }
+  .failure { top: 10px; right: 10px; left: 10px; max-width: none; }
+  .return-toast { top: 64px; right: 10px; left: 10px; max-width: none; }
+}
+
+/* hide snap-zone hint boxes (visual only; snapping still works) */
+#snap-zones { display: none; }

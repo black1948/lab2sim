@@ -1,0 +1,117 @@
+{
+  "assets_version": "1.0",
+  "assets": [
+    {
+      "id": "chemistry.bench.v1",
+      "kind": "bench",
+      "renderer": "chemistry/bench",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/bench",
+        "author": "EduVideo2code",
+        "license": "MIT"
+      },
+      "local_path": null,
+      "sha256": null,
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.candle-smoke.v1",
+      "kind": "candle",
+      "renderer": "chemistry/candle-smoke",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/candle-smoke",
+        "author": "eduvideo2code asset agent",
+        "license": "MIT"
+      },
+      "local_path": "assets/chemistry.candle-smoke.v1.js",
+      "sha256": "e3c3a2668d446265a2fb6e9a02c6f7922d1146977cf0d2c5334edbc03ec972fb",
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.glass-plate-wax.v1",
+      "kind": "glass_plate",
+      "renderer": "chemistry/glass-plate-wax",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/glass-plate-wax",
+        "author": "eduvideo2code asset agent",
+        "license": "MIT"
+      },
+      "local_path": "assets/chemistry.glass-plate-wax.v1.js",
+      "sha256": "2580eb06d13cce2905502d84ad5068070348712e63d1e5db8a9d90e8629c4ccd",
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.knife.v1",
+      "kind": "knife",
+      "renderer": "chemistry/knife",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/knife",
+        "author": "eduvideo2code asset agent",
+        "license": "MIT"
+      },
+      "local_path": "assets/chemistry.knife.v1.js",
+      "sha256": "90da19971d223dba2d04c165bbd1e81335c192824d5834aaad6b2848923e4c2e",
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.beaker-floating.v1",
+      "kind": "beaker",
+      "renderer": "chemistry/beaker-floating",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/beaker-floating",
+        "author": "eduvideo2code asset agent",
+        "license": "MIT"
+      },
+      "local_path": "assets/chemistry.beaker-floating.v1.js",
+      "sha256": "0c1ad4a7529e9a25803f2499f476904aa1a51122b18316efaa46237467b7b1d5",
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.match.v1",
+      "kind": "match",
+      "renderer": "chemistry/match",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/match",
+        "author": "EduVideo2code",
+        "license": "MIT"
+      },
+      "local_path": null,
+      "sha256": null,
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.wood-splint.v1",
+      "kind": "wood_splint",
+      "renderer": "chemistry/wood-splint",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/wood-splint",
+        "author": "eduvideo2code asset agent",
+        "license": "MIT"
+      },
+      "local_path": "assets/chemistry.wood-splint.v1.js",
+      "sha256": "b8bafd6b39ba1c79d5860f7680c9462f6521de450490c61ad97e3352df9aa98e",
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.beaker-inverted.v1",
+      "kind": "beaker",
+      "renderer": "chemistry/beaker-inverted",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/beaker-inverted",
+        "author": "eduvideo2code asset agent",
+        "license": "MIT"
+      },
+      "local_path": "assets/chemistry.beaker-inverted.v1.js",
+      "sha256": "f4a23ba467118d002468c4a497c58e2943d7c1d0c6032047fcce0ee96efb2abb",
+      "attribution_required": false
+    }
+  ]
+}

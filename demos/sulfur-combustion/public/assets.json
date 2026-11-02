@@ -1,0 +1,75 @@
+{
+  "assets_version": "1.0",
+  "assets": [
+    {
+      "id": "chemistry.bench.v1",
+      "kind": "bench",
+      "renderer": "chemistry/bench",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/bench",
+        "author": "EduVideo2code",
+        "license": "MIT"
+      },
+      "local_path": null,
+      "sha256": null,
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.alcohol-lamp.v1",
+      "kind": "alcohol_lamp",
+      "renderer": "chemistry/alcohol-lamp",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/alcohol-lamp",
+        "author": "EduVideo2code",
+        "license": "MIT"
+      },
+      "local_path": null,
+      "sha256": null,
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.combustion-spoon.v1",
+      "kind": "combustion_spoon",
+      "renderer": "chemistry/combustion-spoon",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/combustion-spoon",
+        "author": "eduvideo2code asset agent",
+        "license": "MIT"
+      },
+      "local_path": "assets/chemistry.combustion-spoon.v1.js",
+      "sha256": "d6f6b60df21334614734af16fe46ad350e57f846f99ce3f96ad639ed48d6351d",
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.gas-jar-water.v1",
+      "kind": "gas_jar",
+      "renderer": "chemistry/gas-jar-water",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/gas-jar-water",
+        "author": "eduvideo2code asset agent",
+        "license": "MIT"
+      },
+      "local_path": "assets/chemistry.gas-jar-water.v1.js",
+      "sha256": "09acb56899651e62818309ccb793b05ef92c8746183d7814452dd0ffa3bff3e5",
+      "attribution_required": false
+    },
+    {
+      "id": "chemistry.glass-plate.v1",
+      "kind": "glass_plate",
+      "renderer": "chemistry/glass-plate",
+      "source": {
+        "type": "builtin",
+        "url": "builtin://chemistry/glass-plate",
+        "author": "EduVideo2code",
+        "license": "MIT"
+      },
+      "local_path": null,
+      "sha256": null,
+      "attribution_required": false
+    }
+  ]
+}

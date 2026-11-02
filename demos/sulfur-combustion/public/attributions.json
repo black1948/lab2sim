@@ -1,0 +1,39 @@
+{
+  "attributions": [
+    {
+      "asset": "chemistry.bench.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/bench",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.alcohol-lamp.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/alcohol-lamp",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.combustion-spoon.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "builtin://chemistry/combustion-spoon",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.gas-jar-water.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "builtin://chemistry/gas-jar-water",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.glass-plate.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/glass-plate",
+      "attribution": null
+    }
+  ]
+}

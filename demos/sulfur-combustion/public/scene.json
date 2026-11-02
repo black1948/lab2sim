@@ -1,0 +1,135 @@
+{
+ "scene_version": "1.0",
+ "renderer": "svg-2.5d",
+ "theme": "laboratory-light",
+ "viewport": {
+  "width": 1200,
+  "height": 720,
+  "safe_margin": 32
+ },
+ "layout": {
+  "stockroom": "left",
+  "inspector": "right",
+  "tools": "bottom"
+ },
+ "entities": {
+  "alcohol-lamp-1": {
+   "asset_ref": "chemistry.alcohol-lamp.v1",
+   "renderer": "chemistry/alcohol-lamp",
+   "transform": {
+    "x": 0.24,
+    "y": 0.212,
+    "scale": 1.5,
+    "rotation_deg": 0
+   },
+   "home": {
+    "x": 0.24,
+    "y": 0.212
+   },
+   "z_index": 18,
+   "anchors": {},
+   "hit_shape": {
+    "type": "circle",
+    "radius": 0.11
+   },
+   "state_bindings": {
+    "valve_open": "flame"
+   }
+  },
+  "spoon-sulfur": {
+   "asset_ref": "chemistry.combustion-spoon.v1",
+   "renderer": "chemistry/combustion-spoon",
+   "transform": {
+    "x": 0.36,
+    "y": 0.212,
+    "scale": 1.6,
+    "rotation_deg": 0
+   },
+   "home": {
+    "x": 0.36,
+    "y": 0.212
+   },
+   "z_index": 16,
+   "anchors": {},
+   "hit_shape": {
+    "type": "capsule",
+    "width": 0.07,
+    "height": 0.52
+   },
+   "state_bindings": {},
+   "snap": {
+    "anchored_gap": -0.12,
+    "anchored_gap_overrides": {
+     "gas_jar": -0.26
+    }
+   },
+   "state_labels": {
+    "sulfur_state": "Sulfur state",
+    "flame_mode": "Flame",
+    "heating": "Heating"
+   }
+  },
+  "jar-oxygen": {
+   "asset_ref": "chemistry.gas-jar-water.v1",
+   "renderer": "chemistry/gas-jar-water",
+   "transform": {
+    "x": 0.62,
+    "y": 0.18,
+    "scale": 2.0,
+    "rotation_deg": 0
+   },
+   "home": {
+    "x": 0.62,
+    "y": 0.18
+   },
+   "z_index": 22,
+   "anchors": {
+    "mouth": {
+     "x": 0,
+     "y": -0.508
+    }
+   },
+   "hit_shape": {
+    "type": "rect",
+    "width": 0.16,
+    "height": 0.3
+   },
+   "state_bindings": {},
+   "state_labels": {
+    "cover_removed": "Glass plate removed",
+    "oxygen_observed": "Compared by observation"
+   },
+   "snap_anchor": "mouth"
+  },
+  "plate-oxygen": {
+   "asset_ref": "chemistry.glass-plate.v1",
+   "renderer": "chemistry/glass-plate",
+   "transform": {
+    "x": 0.62,
+    "y": 0.688,
+    "scale": 2.3,
+    "rotation_deg": 0
+   },
+   "home": {
+    "x": 0.62,
+    "y": 0.688
+   },
+   "z_index": 30,
+   "anchors": {},
+   "hit_shape": {
+    "type": "rect",
+    "width": 0.2,
+    "height": 0.05
+   },
+   "state_bindings": {},
+   "snap": {
+    "anchored_gap": 0.02,
+    "gap": 0.03
+   }
+  }
+ },
+ "snap": {
+  "distance": 0.16,
+  "show_zones_while_dragging": true
+ }
+}

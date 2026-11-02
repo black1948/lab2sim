@@ -1,0 +1,411 @@
+{
+  "source": {
+    "video": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动.mp4",
+    "duration_s": 109.992494,
+    "width": 384,
+    "height": 288,
+    "frame_rate": "25/1"
+  },
+  "contact_sheet": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/contact-sheet.jpg",
+  "review_sheets": {
+    "layout": "2x2",
+    "note": "4 帧/张的审阅拼接表（左上→右上→左下→右下，格内标注帧号与时间戳）。模型审阅优先按张输入 sheets，需看清读数/接线/小物体时再打开对应单帧原图；IR 与报告引用证据一律使用 frame ID，不用 sheet ID。",
+    "entries": [
+      {
+        "id": "sheet-000",
+        "frames": [
+          "frame-000",
+          "frame-001",
+          "frame-002",
+          "frame-003"
+        ],
+        "labeled": true,
+        "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/sheets/sheet-000.jpg"
+      },
+      {
+        "id": "sheet-001",
+        "frames": [
+          "frame-004",
+          "frame-005",
+          "frame-006",
+          "frame-007"
+        ],
+        "labeled": true,
+        "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/sheets/sheet-001.jpg"
+      },
+      {
+        "id": "sheet-002",
+        "frames": [
+          "frame-008",
+          "frame-009",
+          "frame-010",
+          "frame-011"
+        ],
+        "labeled": true,
+        "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/sheets/sheet-002.jpg"
+      },
+      {
+        "id": "sheet-003",
+        "frames": [
+          "frame-012",
+          "frame-013",
+          "frame-014",
+          "frame-015"
+        ],
+        "labeled": true,
+        "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/sheets/sheet-003.jpg"
+      },
+      {
+        "id": "sheet-004",
+        "frames": [
+          "frame-016",
+          "frame-017",
+          "frame-018",
+          "frame-019"
+        ],
+        "labeled": true,
+        "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/sheets/sheet-004.jpg"
+      },
+      {
+        "id": "sheet-005",
+        "frames": [
+          "frame-020",
+          "frame-021",
+          "frame-022",
+          "frame-023"
+        ],
+        "labeled": true,
+        "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/sheets/sheet-005.jpg"
+      },
+      {
+        "id": "sheet-006",
+        "frames": [
+          "frame-024",
+          "frame-025",
+          "frame-026",
+          "frame-027"
+        ],
+        "labeled": true,
+        "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/sheets/sheet-006.jpg"
+      },
+      {
+        "id": "sheet-007",
+        "frames": [
+          "frame-028",
+          "frame-029",
+          "frame-030",
+          "frame-031"
+        ],
+        "labeled": true,
+        "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/sheets/sheet-007.jpg"
+      },
+      {
+        "id": "sheet-008",
+        "frames": [
+          "frame-032"
+        ],
+        "labeled": true,
+        "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/sheets/sheet-008.jpg"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "id": "frame-000",
+      "type": "video_frame",
+      "time_s": 0.0,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-000.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-001",
+      "type": "video_frame",
+      "time_s": 5.5,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-001.jpg",
+      "sampling": [
+        "scene_change"
+      ]
+    },
+    {
+      "id": "frame-002",
+      "type": "video_frame",
+      "time_s": 7.333,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-002.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-003",
+      "type": "video_frame",
+      "time_s": 14.666,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-003.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-004",
+      "type": "video_frame",
+      "time_s": 21.998,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-004.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-005",
+      "type": "video_frame",
+      "time_s": 27.5,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-005.jpg",
+      "sampling": [
+        "scene_change"
+      ]
+    },
+    {
+      "id": "frame-006",
+      "type": "video_frame",
+      "time_s": 29.331,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-006.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-007",
+      "type": "video_frame",
+      "time_s": 32.0,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-007.jpg",
+      "sampling": [
+        "scene_change"
+      ]
+    },
+    {
+      "id": "frame-008",
+      "type": "video_frame",
+      "time_s": 34.0,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-008.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-009",
+      "type": "video_frame",
+      "time_s": 35.0,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-009.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-010",
+      "type": "video_frame",
+      "time_s": 35.6,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-010.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-011",
+      "type": "video_frame",
+      "time_s": 36.664,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-011.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-012",
+      "type": "video_frame",
+      "time_s": 37.4,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-012.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-013",
+      "type": "video_frame",
+      "time_s": 38.5,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-013.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-014",
+      "type": "video_frame",
+      "time_s": 41.0,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-014.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-015",
+      "type": "video_frame",
+      "time_s": 43.997,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-015.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-016",
+      "type": "video_frame",
+      "time_s": 47.0,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-016.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-017",
+      "type": "video_frame",
+      "time_s": 51.33,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-017.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-018",
+      "type": "video_frame",
+      "time_s": 54.0,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-018.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-019",
+      "type": "video_frame",
+      "time_s": 58.663,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-019.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-020",
+      "type": "video_frame",
+      "time_s": 61.0,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-020.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-021",
+      "type": "video_frame",
+      "time_s": 65.995,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-021.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-022",
+      "type": "video_frame",
+      "time_s": 68.5,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-022.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-023",
+      "type": "video_frame",
+      "time_s": 73.328,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-023.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-024",
+      "type": "video_frame",
+      "time_s": 76.5,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-024.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-025",
+      "type": "video_frame",
+      "time_s": 79.5,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-025.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-026",
+      "type": "video_frame",
+      "time_s": 80.1,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-026.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-027",
+      "type": "video_frame",
+      "time_s": 80.661,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-027.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-028",
+      "type": "video_frame",
+      "time_s": 84.0,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-028.jpg",
+      "sampling": [
+        "targeted"
+      ]
+    },
+    {
+      "id": "frame-029",
+      "type": "video_frame",
+      "time_s": 87.994,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-029.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-030",
+      "type": "video_frame",
+      "time_s": 95.327,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-030.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-031",
+      "type": "video_frame",
+      "time_s": 102.66,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-031.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    },
+    {
+      "id": "frame-032",
+      "type": "video_frame",
+      "time_s": 109.952,
+      "path": "/home/devdata/eduvideo2code/sample_case/chemistry/10-分子运动/frames/frame-032.jpg",
+      "sampling": [
+        "uniform"
+      ]
+    }
+  ]
+}

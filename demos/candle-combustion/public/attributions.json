@@ -1,0 +1,60 @@
+{
+  "attributions": [
+    {
+      "asset": "chemistry.bench.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/bench",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.candle-smoke.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "builtin://chemistry/candle-smoke",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.glass-plate-wax.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "builtin://chemistry/glass-plate-wax",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.knife.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "builtin://chemistry/knife",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.beaker-floating.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "builtin://chemistry/beaker-floating",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.match.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/match",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.wood-splint.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "builtin://chemistry/wood-splint",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.beaker-inverted.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "builtin://chemistry/beaker-inverted",
+      "attribution": null
+    }
+  ]
+}

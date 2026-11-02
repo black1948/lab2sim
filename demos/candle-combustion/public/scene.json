@@ -1,0 +1,282 @@
+{
+  "scene_version": "1.0",
+  "renderer": "svg-2.5d",
+  "theme": "laboratory-light",
+  "viewport": {
+    "width": 1200,
+    "height": 720,
+    "safe_margin": 32
+  },
+  "layout": {
+    "stockroom": "left",
+    "inspector": "right",
+    "tools": "bottom"
+  },
+  "entities": {
+    "bench-1": {
+      "asset_ref": "chemistry.bench.v1",
+      "renderer": "chemistry/bench",
+      "transform": {
+        "x": 0.5,
+        "y": 0.14,
+        "scale": 1,
+        "rotation_deg": 0
+      },
+      "home": {
+        "x": 0.5,
+        "y": 0.14
+      },
+      "z_index": 15,
+      "anchors": {},
+      "hit_shape": {
+        "type": "circle",
+        "radius": 0.11
+      },
+      "state_bindings": {}
+    },
+    "candle-1": {
+      "asset_ref": "chemistry.candle-smoke.v1",
+      "renderer": "chemistry/candle-smoke",
+      "transform": {
+        "x": 0.6,
+        "y": 0.15,
+        "scale": 1.6,
+        "rotation_deg": 0
+      },
+      "home": {
+        "x": 0.6,
+        "y": 0.15
+      },
+      "z_index": 22,
+      "anchors": {
+        "wick": {
+          "x": 0,
+          "y": -0.045
+        }
+      },
+      "hit_shape": {
+        "type": "rect",
+        "width": 0.1,
+        "height": 0.16
+      },
+      "state_bindings": {},
+      "state_labels": {
+        "lit": "Burning state",
+        "smoke": "White smoke",
+        "zone_labels": "Flame layer annotation",
+        "cut_count": "Cutting count",
+        "relit_via_smoke": "Relight via white smoke"
+      },
+      "snap_anchor": "wick"
+    },
+    "glass-slide-1": {
+      "asset_ref": "chemistry.glass-plate-wax.v1",
+      "renderer": "chemistry/glass-plate-wax",
+      "transform": {
+        "x": 0.38,
+        "y": 0.12,
+        "scale": 1.1,
+        "rotation_deg": 0
+      },
+      "home": {
+        "x": 0.38,
+        "y": 0.12
+      },
+      "z_index": 26,
+      "anchors": {},
+      "hit_shape": {
+        "type": "rect",
+        "width": 0.16,
+        "height": 0.06
+      },
+      "state_bindings": {},
+      "snap": {
+        "gap": 0.2,
+        "gap_overrides": {
+          "beaker": 0.24
+        }
+      },
+      "state_labels": {
+        "wax_shavings": "Wax bits"
+      }
+    },
+    "knife-1": {
+      "asset_ref": "chemistry.knife.v1",
+      "renderer": "chemistry/knife",
+      "transform": {
+        "x": 0.3,
+        "y": 0.21,
+        "scale": 1.3,
+        "rotation_deg": 0
+      },
+      "home": {
+        "x": 0.3,
+        "y": 0.21
+      },
+      "z_index": 30,
+      "anchors": {},
+      "hit_shape": {
+        "type": "rect",
+        "width": 0.16,
+        "height": 0.07
+      },
+      "state_bindings": {},
+      "snap": {
+        "gap": 0.2,
+        "anchored_gap_overrides": {
+          "candle": 0.03
+        }
+      }
+    },
+    "beaker-water-1": {
+      "asset_ref": "chemistry.beaker-floating.v1",
+      "renderer": "chemistry/beaker-floating",
+      "transform": {
+        "x": 0.18,
+        "y": 0.14,
+        "scale": 1.15,
+        "rotation_deg": 0
+      },
+      "home": {
+        "x": 0.18,
+        "y": 0.14
+      },
+      "z_index": 20,
+      "anchors": {
+        "mouth": {
+          "x": 0,
+          "y": -0.15
+        }
+      },
+      "hit_shape": {
+        "type": "rect",
+        "width": 0.22,
+        "height": 0.3
+      },
+      "state_bindings": {
+        "volume_ml": "liquid.level",
+        "delivered_ml": "liquid.level",
+        "color": "liquid.color"
+      },
+      "snap": {
+        "gap": 0.26,
+        "anchored_gap_overrides": {
+          "gas_holder": -0.05
+        }
+      },
+      "state_labels": {
+        "floating_wax": "Wax bits float on water"
+      }
+    },
+    "match-1": {
+      "asset_ref": "chemistry.match.v1",
+      "renderer": "chemistry/match",
+      "transform": {
+        "x": 0.7,
+        "y": 0.22,
+        "scale": 1.4,
+        "rotation_deg": 0
+      },
+      "home": {
+        "x": 0.7,
+        "y": 0.22
+      },
+      "z_index": 34,
+      "anchors": {},
+      "hit_shape": {
+        "type": "rect",
+        "width": 0.06,
+        "height": 0.16
+      },
+      "state_bindings": {},
+      "snap": {
+        "anchored_gap": 0.0,
+        "gap": 0.2,
+        "anchored_gap_overrides": {
+          "candle": -0.03
+        }
+      },
+      "state_labels": {
+        "lit": "Match state"
+      }
+    },
+    "splint-1": {
+      "asset_ref": "chemistry.wood-splint.v1",
+      "renderer": "chemistry/wood-splint",
+      "transform": {
+        "x": 0.85,
+        "y": 0.12,
+        "scale": 1.3,
+        "rotation_deg": 0
+      },
+      "home": {
+        "x": 0.85,
+        "y": 0.12
+      },
+      "z_index": 32,
+      "anchors": {},
+      "hit_shape": {
+        "type": "rect",
+        "width": 0.24,
+        "height": 0.05
+      },
+      "state_bindings": {},
+      "snap": {
+        "gap": 0.2,
+        "anchored_gap_overrides": {
+          "candle": 0.1
+        }
+      },
+      "state_labels": {
+        "charred": "Charred mark",
+        "heating": "Scorching"
+      }
+    },
+    "beaker-dry-1": {
+      "asset_ref": "chemistry.beaker-inverted.v1",
+      "renderer": "chemistry/beaker-inverted",
+      "transform": {
+        "x": 0.91,
+        "y": 0.14,
+        "scale": 1.15,
+        "rotation_deg": 0
+      },
+      "home": {
+        "x": 0.91,
+        "y": 0.14
+      },
+      "z_index": 36,
+      "anchors": {
+        "mouth": {
+          "x": 0,
+          "y": -0.15
+        }
+      },
+      "hit_shape": {
+        "type": "rect",
+        "width": 0.22,
+        "height": 0.3
+      },
+      "state_bindings": {
+        "volume_ml": "liquid.level",
+        "delivered_ml": "liquid.level",
+        "color": "liquid.color"
+      },
+      "snap": {
+        "gap": 0.2,
+        "anchored_gap_overrides": {
+          "gas_holder": -0.05,
+          "candle": 0.1
+        }
+      },
+      "state_labels": {
+        "condensed": "Mist on inner wall",
+        "heating": "covering the flame"
+      }
+    }
+  },
+  "snap": {
+    "distance": 0.16,
+    "show_zones_while_dragging": true
+  }
+}

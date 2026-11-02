@@ -1,0 +1,60 @@
+{
+  "attributions": [
+    {
+      "asset": "chemistry.beaker.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/beaker",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.test-tube.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/test-tube",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.test-tube-rack-3h.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "local://assets/registries/discovered/chemistry.test-tube-rack-3h.v1.svg",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.indicator-bottle.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/indicator",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.reagent-bottle.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/reagent-bottle",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.dropper.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/dropper",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.glass-rod.v1",
+      "author": "EduVideo2code",
+      "license": "MIT",
+      "source": "builtin://chemistry/glass-rod",
+      "attribution": null
+    },
+    {
+      "asset": "chemistry.beaker-inverted.v1",
+      "author": "eduvideo2code asset agent",
+      "license": "MIT",
+      "source": "builtin://chemistry/beaker-inverted",
+      "attribution": null
+    }
+  ]
+}

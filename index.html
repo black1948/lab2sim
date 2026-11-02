@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab2Sim: Turning Real-World Experiment Videos into Interactive Virtual Experiments</title>
+  <meta name="description" content="Lab2Sim is a benchmark of 218 science experiment videos with evidence-grounded specifications and 11,881 rubric items. EduVideo2Code turns videos into interactive virtual experiments through hierarchical procedure extraction, state-machine-driven generation, and execution-based verification." />
+  <meta property="og:title" content="Lab2Sim: Turning Real-World Experiment Videos into Interactive Virtual Experiments" />
+  <meta property="og:description" content="From watching to doing: compile experiment videos into interactive virtual experiments." />
+  <meta property="og:image" content="static/images/teaser.png" />
+  <meta name="theme-color" content="#05080f" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%2335e0d4' d='M13 3h6v2h-2v6.2l7.6 13.4A3 3 0 0 1 22 27H10a3 3 0 0 1-2.6-4.4L15 11.2V5h-2V3z'/%3E%3Ccircle cx='12.5' cy='21' r='1.6' fill='%23101420'/%3E%3Ccircle cx='18' cy='23' r='1.2' fill='%23101420'/%3E%3Ccircle cx='16' cy='18.5' r='.9' fill='%23101420'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css?v=1" />
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- ============ NAV ============ -->
+  <nav class="nav" id="nav">
+    <a class="nav-brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path fill="currentColor" d="M13 3h6v2h-2v6.2l7.6 13.4A3 3 0 0 1 22 27H10a3 3 0 0 1-2.6-4.4L15 11.2V5h-2V3z"/></svg>
+      </span>
+      Lab2Sim
+    </a>
+    <div class="nav-links">
+      <a href="#demo">Demo</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#citation">Citation</a>
+    </div>
+    <a class="nav-cta" href="https://github.com/black1948/lab2sim" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Star on GitHub
+    </a>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="top">
+    <canvas id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <div class="hero-inner">
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        Chemistry · Physics · Biology — real-world experiments
+      </div>
+
+      <h1 class="hero-title reveal">
+        <span class="grad-text">Lab2Sim</span>
+      </h1>
+      <p class="hero-subtitle reveal">
+        Turning Real-World Experiment Videos into
+        <span class="hl">Interactive Virtual Experiments</span>
+      </p>
+
+      <div class="hero-typer reveal" aria-live="polite">
+        <span class="typer-prompt">&gt;</span>
+        <span id="typer"></span><span class="caret"></span>
+      </div>
+
+      <div class="authors reveal">
+        <span>Xusen Hei<sup>*</sup></span>
+        <span>Jiali Chen<sup>*</sup></span>
+        <span>Jinyu Yang</span>
+        <span>Yi Cai<sup>†</sup></span>
+      </div>
+      <div class="affil reveal">
+        <span><b>South China University of Technology</b> &nbsp;·&nbsp; <b>The Hong Kong Polytechnic University</b></span>
+        <span class="notes"><sup>*</sup>Equal contribution &nbsp; <sup>†</sup>Corresponding author</span>
+      </div>
+
+      <div class="hero-buttons reveal">
+        <!-- TODO: replace href="#" with the arXiv abs link once published -->
+        <a class="btn btn-primary" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>
+          Paper <span class="chip-soon">arXiv soon</span>
+        </a>
+        <a class="btn" href="https://github.com/black1948/lab2sim" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Code
+        </a>
+        <!-- TODO: replace href="#" with the dataset (HuggingFace / GitHub) URL -->
+        <a class="btn" href="#" target="_blank" rel="noopener">
+          <span class="emoji" aria-hidden="true">🧪</span>
+          Dataset <span class="chip-soon">soon</span>
+        </a>
+        <a class="btn btn-demo" href="#demo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          Live Demo
+        </a>
+      </div>
+
+      <div class="hero-stats reveal">
+        <div class="hstat"><b class="count" data-count="218">0</b><span>experiment videos</span></div>
+        <div class="hstat"><b class="count" data-count="11881" data-format="comma">0</b><span>rubric items</span></div>
+        <div class="hstat"><b class="count" data-count="24.15" data-decimals="2" data-prefix="+">0</b><span>apparatus fidelity gain</span></div>
+        <div class="hstat"><b class="count" data-count="100" data-suffix="%">0</b><span>runnable rate</span></div>
+      </div>
+    </div>
+
+    <a class="scroll-hint" href="#teaser" aria-label="Scroll down"><span></span></a>
+  </header>
+
+  <!-- ============ TEASER ============ -->
+  <section class="section teaser-section" id="teaser">
+    <div class="container">
+      <div class="teaser-frame reveal tilt">
+        <div class="scanline" aria-hidden="true"></div>
+        <img src="static/images/teaser.png" alt="Motivating example: converting an experiment video into an interactive virtual experiment" loading="eager" />
+        <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+      </div>
+      <p class="caption reveal">From <b>watching</b> to <b>doing</b>: a real experiment video is compiled into a browser-based virtual experiment that reproduces the apparatus, enforces step preconditions, and re-plays the observed state transitions.</p>
+    </div>
+  </section>
+
+  <!-- ============ ABSTRACT ============ -->
+  <section class="section" id="abstract">
+    <div class="container narrow">
+      <div class="eyebrow reveal">Abstract</div>
+      <h2 class="section-title reveal">Runnable pages are easy. <span class="grad-text">Faithful experiments are not.</span></h2>
+      <p class="lead reveal">
+        Science experiment videos demonstrate how experiments are performed, but offer no direct interaction for learners.
+        Turning them into virtual experiments requires not only reproducing the observed apparatus and state changes, but also
+        enforcing the preconditions governing each operation. We introduce <b>Lab2Sim</b>, a benchmark of
+        <b>218 science experiment videos</b> with evidence-grounded specifications and <b>11,881 rubric items</b>.
+      </p>
+      <p class="lead reveal">
+        To address this task, we propose <b>EduVideo2Code</b>, which extracts experimental procedures hierarchically, encodes
+        them as explicit <em>state machines</em> to guide code generation, and refines the resulting pages through
+        <em>execution-based verification</em>. Existing multimodal models readily generate runnable pages — yet no model reaches
+        60% apparatus fidelity. EduVideo2Code consistently improves all four evaluation dimensions across two backbone models,
+        with apparatus fidelity gains of up to <b>24.15 points</b>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ LIVE DEMO ============ -->
+  <section class="section" id="demo">
+    <div class="container">
+      <div class="eyebrow reveal">Demo</div>
+      <h2 class="section-title reveal">One video in — <span class="grad-text">a working experiment out</span>.</h2>
+      <p class="section-sub reveal">
+        <b>Left:</b> the original “molecular motion” demonstration video from the benchmark.
+        <b>Right:</b> the virtual experiment EduVideo2Code generates from it — every operation is performed live in the
+        browser: drawing phenolphthalein with the pipette, dripping, stirring, pouring, and the solution finally
+        <b>turning red</b> above the concentrated-ammonia bottle, exactly as in the video.
+      </p>
+
+      <div class="video-duo reveal">
+        <figure class="video-card">
+          <div class="video-frame">
+            <video src="static/videos/original.mp4" controls muted loop playsinline preload="metadata"></video>
+          </div>
+          <figcaption><span class="v-tag src">source video</span> Real-world demonstration · molecular motion of ammonia</figcaption>
+        </figure>
+        <div class="duo-arrow" aria-hidden="true">
+          <span class="duo-core">Lab2Sim</span>
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M4 12h14m0 0l-5-5m5 5l-5 5"/></svg>
+        </div>
+        <figure class="video-card">
+          <div class="video-frame">
+            <video src="static/videos/simulation.webm" controls muted loop playsinline preload="metadata"></video>
+          </div>
+          <figcaption><span class="v-tag gen">EduVideo2Code output</span> Generated interactive experiment · browser screen capture</figcaption>
+        </figure>
+      </div>
+
+      <div class="try-row reveal">
+        <span class="try-label">These pages are real, runnable outputs — try them yourself:</span>
+        <a href="demos/molecular-motion/index.html" target="_blank" rel="noopener">🧪 Molecular Motion</a>
+        <a href="demos/candle-combustion/index.html" target="_blank" rel="noopener">🕯️ Candle Combustion</a>
+        <a href="demos/sulfur-combustion/index.html" target="_blank" rel="noopener">🔥 Sulfur Combustion</a>
+        <span class="try-note">open in a new tab · start by collecting apparatus from the Stockroom</span>
+      </div>
+
+      <div class="pipeline reveal">
+        <div class="pipe-head">
+          <div class="eyebrow">How it was made</div>
+          <button class="replay" id="pipeReplay" type="button" aria-label="Replay">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+            Replay
+          </button>
+        </div>
+        <div class="terminal">
+          <div class="term-head">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="term-title">eduvideo2code · compile–verify–repair</span>
+          </div>
+          <pre class="term-out" id="pipeOut"></pre>
+          <div class="term-foot">
+            <span><i class="led" id="pipeLed"></i><span id="pipeStatus">ready</span></span>
+            <span id="pipeStats"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BENCHMARK ============ -->
+  <section class="section" id="benchmark">
+    <div class="container">
+      <div class="eyebrow reveal">Benchmark</div>
+      <h2 class="section-title reveal">Lab2Sim: <span class="grad-text">218 videos, grounded in evidence</span>.</h2>
+      <p class="section-sub reveal">
+        From 500+ public chemistry, physics, and biology videos on Bilibili and YouTube, 218 survived manual screening.
+        A GLM-5.3-series assistant drafts a gold specification for each — apparatus, ordered steps, preconditions, state
+        transitions — and human reviewers verify every draft against the source video (~13 min per video). Fixed templates
+        turn each specification into executable rubric items, plus <em>violation probes</em> that skip, reorder, or misuse steps.
+      </p>
+
+      <div class="figure-card narrow reveal zoomable" data-full="static/images/bench.png" data-caption="Lab2Sim construction: videos are collected and screened, a gold specification grounded in video frames is built for each video, and fixed templates turn the specification into rubric items.">
+        <img src="static/images/bench.png" alt="Lab2Sim benchmark construction pipeline" loading="lazy" />
+        <span class="zoom-hint">Click to enlarge</span>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat reveal spot"><b class="count" data-count="218">0</b><span>instances (videos)</span><i>chemistry 89 · physics 87 · biology 42</i></div>
+        <div class="stat reveal spot"><b class="count" data-count="11881" data-format="comma">0</b><span>total rubric items</span><i>54.5 per instance</i></div>
+        <div class="stat reveal spot"><b class="count" data-count="7.1" data-decimals="1">0</b><span>steps / instance</span><i>each with preconditions</i></div>
+        <div class="stat reveal spot"><b class="count" data-count="23.2" data-decimals="1">0</b><span>state transitions / instance</span><i>e.g. flask.solution.color</i></div>
+        <div class="stat reveal spot"><b class="count" data-count="135.8" data-decimals="1" data-suffix=" s">0</b><span>mean video duration</span><i>Bilibili + YouTube, ≥720p</i></div>
+        <div class="stat reveal spot"><b class="count" data-count="3" data-suffix=" ×">0</b><span>evidence labels</span><i>video_visible / apparatus_inferred / domain</i></div>
+      </div>
+
+      <div class="dim-grid">
+        <div class="dim reveal spot">
+          <div class="dim-tag fidelity">fidelity</div>
+          <h3>Apparatus Fidelity <span class="dim-abbr">AF</span></h3>
+          <p>Is every annotated piece of apparatus present and correctly identified? Spatial layout is not scored — content over pixels.</p>
+        </div>
+        <div class="dim reveal spot">
+          <div class="dim-tag operability">operability</div>
+          <h3>Procedure Execution <span class="dim-abbr">PE</span></h3>
+          <p>Can each demonstrated step be performed on the correct object and complete as specified, checked by replaying the procedure?</p>
+        </div>
+        <div class="dim reveal spot">
+          <div class="dim-tag operability">operability</div>
+          <h3>Procedural Constraint Compliance <span class="dim-abbr">PCC</span></h3>
+          <p>Does the page block a step whose precondition does not hold — and explain why? Violation probes skip, reorder, or misuse steps.</p>
+        </div>
+        <div class="dim reveal spot">
+          <div class="dim-tag fidelity">fidelity</div>
+          <h3>State-Transition Fidelity <span class="dim-abbr">STF</span></h3>
+          <p>Do initial states and the states after each step match the video, e.g. a solution turning from colorless to pink?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METHOD ============ -->
+  <section class="section" id="method">
+    <div class="container">
+      <div class="eyebrow reveal">Method</div>
+      <h2 class="section-title reveal">EduVideo2Code: a <span class="grad-text">compile–verify–repair</span> loop.</h2>
+      <p class="section-sub reveal">
+        Video understanding on one side, interactive implementation on the other — bridged by an explicit experiment state machine
+        M&nbsp;=&nbsp;(S,&nbsp;A,&nbsp;Φ) where states assign values to tracked object attributes, operations implement steps, and Φ guards each operation with its precondition.
+      </p>
+
+      <div class="figure-card reveal zoomable" data-full="static/images/method.png" data-caption="EduVideo2Code overview: HPE extracts an evidence-grounded procedure P from the video; SMG compiles P into a state machine M and generates the page; EBV runs the page in a browser and triggers targeted repair until acceptance or budget exhaustion.">
+        <img src="static/images/method.png" alt="EduVideo2Code architecture" loading="lazy" />
+        <span class="zoom-hint">Click to enlarge</span>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar reveal spot">
+          <div class="pillar-num">01</div>
+          <h3>Hierarchical Procedure Extraction</h3>
+          <p>A coarse pass finds phases, apparatus, and step order; a fine pass re-inspects marked segments with dense, high-resolution sampling for instrument readings, liquid levels, and connections. <b>Every step must cite supporting frames</b> — unverifiable steps are dropped.</p>
+        </div>
+        <div class="pillar reveal spot">
+          <div class="pillar-num">02</div>
+          <h3>State-Machine-Driven Generation</h3>
+          <p>The procedure compiles into M&nbsp;=&nbsp;(S,&nbsp;A,&nbsp;Φ). Each operation becomes a direct-manipulation gesture — dragging, pouring, lighting — and each state a visual appearance. Learners <b>perform</b> the experiment instead of replaying an animation. Three design documents (science, layout, asset list) record evidence and asset provenance.</p>
+        </div>
+        <div class="pillar reveal spot">
+          <div class="pillar-num">03</div>
+          <h3>Execution-Based Verification</h3>
+          <p>A separate verifier runs the page in a browser: it compares apparatus with the video, attempts invalid operations, and replays the procedure, comparing screenshots and state summaries against video evidence. Below the threshold θ&nbsp;=&nbsp;0.8, diagnostic feedback triggers targeted repair — up to T<sub>max</sub>&nbsp;=&nbsp;10 rounds (5.3 on average).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section class="section" id="results">
+    <div class="container">
+      <div class="eyebrow reveal">Results</div>
+      <h2 class="section-title reveal">93%+ runnable — <span class="grad-text">but that says little</span>.</h2>
+      <p class="section-sub reveal">All 218 instances, six baselines with direct video-to-code generation vs. EduVideo2Code on two backbones. AF/PE/PCC/STF in %, higher is better except OFR.</p>
+
+      <div class="table-card reveal">
+        <div class="table-scroll">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th class="tl" rowspan="2">Model</th>
+                <th colspan="4">Rubric dimensions</th>
+                <th colspan="2">Diagnostics</th>
+              </tr>
+              <tr class="sub-head">
+                <th>AF <span class="arr">↑</span></th><th>PE <span class="arr">↑</span></th><th>PCC <span class="arr">↑</span></th><th>STF <span class="arr">↑</span></th><th>OFR <span class="arr">↓</span></th><th>RR <span class="arr">↑</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="group"><td colspan="7">Direct generation</td></tr>
+              <tr><td class="tl">Seed-2.1-Pro</td><td>20.62</td><td>20.11</td><td>25.14</td><td>24.65</td><td>31.09</td><td>93.12</td></tr>
+              <tr><td class="tl">GLM-5.3-Flash</td><td>40.44</td><td>22.58</td><td>16.33</td><td>34.48</td><td>12.90</td><td>94.95</td></tr>
+              <tr><td class="tl">GPT-6-Astra</td><td>41.81</td><td>24.06</td><td><b>44.83</b></td><td>37.88</td><td>22.28</td><td>96.79</td></tr>
+              <tr><td class="tl">GPT-5.6-Sol</td><td>36.61</td><td>32.79</td><td>32.56</td><td>41.68</td><td>28.52</td><td>96.79</td></tr>
+              <tr><td class="tl">DeepSeek-V4.1-Flash</td><td>59.09</td><td>36.48</td><td>36.67</td><td>41.83</td><td><b>3.14</b></td><td><b>100.00</b></td></tr>
+              <tr><td class="tl">Kimi-K3</td><td>54.23</td><td>28.57</td><td>22.22</td><td>44.86</td><td>8.04</td><td><b>100.00</b></td></tr>
+              <tr class="group"><td colspan="7">EduVideo2Code (ours)</td></tr>
+              <tr class="ours"><td class="tl">+ GLM-5.3-Flash</td><td><b>61.32</b><i class="delta up">+20.88</i></td><td>37.17<i class="delta up">+14.59</i></td><td>38.33<i class="delta up">+22.00</i></td><td><b>49.63</b><i class="delta up">+15.15</i></td><td>7.10<i class="delta up">−5.80</i></td><td><b>100.00</b><i class="delta up">+5.05</i></td></tr>
+              <tr class="ours"><td class="tl">+ GPT-5.6-Sol</td><td>60.76<i class="delta up">+24.15</i></td><td><b>41.40</b><i class="delta up">+8.61</i></td><td>33.75<i class="delta up">+1.19</i></td><td>45.45<i class="delta up">+3.77</i></td><td>12.38<i class="delta up">−16.14</i></td><td><b>100.00</b><i class="delta up">+3.21</i></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="findings">
+        <div class="finding reveal spot">
+          <div class="f-num">F1</div>
+          <h4>A high Runnable Rate says little about fidelity</h4>
+          <p>All eight systems exceed 93% RR, yet AF spans 20.62 → 61.32 and PE 20.11 → 41.40. A page that loads and responds to clicks is not a page that reproduces the experiment.</p>
+        </div>
+        <div class="finding reveal spot">
+          <div class="f-num">F2</div>
+          <h4>Drawing the apparatus is easier than making steps work</h4>
+          <p>For every system AF&nbsp;&gt;&nbsp;PE. Executing steps is also different from guarding them: Kimi-K3 executes well (OFR 8.04) but enforces few constraints (PCC 22.22), while GPT-6-Astra leads PCC at 44.83.</p>
+        </div>
+        <div class="finding reveal spot">
+          <div class="f-num">F3</div>
+          <h4>EduVideo2Code lifts both backbones on all dimensions</h4>
+          <p>AF +20.88 (GLM-5.3-Flash) and +24.15 (GPT-5.6-Sol), RR to 100%. Gains vary by dimension: PCC improves by 22.00 for one backbone but only 1.19 for the other.</p>
+        </div>
+      </div>
+
+      <div class="table-card slim reveal">
+        <div class="table-title">Ablation — GLM-5.3-Flash backbone, 218 instances (%)</div>
+        <div class="table-scroll">
+          <table class="results-table">
+            <thead>
+              <tr><th class="tl">Variant</th><th>AF <span class="arr">↑</span></th><th>PE <span class="arr">↑</span></th><th>PCC <span class="arr">↑</span></th><th>STF <span class="arr">↑</span></th><th>OFR <span class="arr">↓</span></th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="tl">Direct generation</td><td>40.44</td><td>22.58</td><td>16.33</td><td>34.48</td><td>12.90</td></tr>
+              <tr class="ours"><td class="tl">EduVideo2Code (full)</td><td><b>61.32</b></td><td><b>37.17</b></td><td><b>38.33</b></td><td><b>49.63</b></td><td><b>7.10</b></td></tr>
+              <tr><td class="tl">w/o HPE</td><td>48.24<i class="delta down">−13.08</i></td><td>23.53<i class="delta down">−13.64</i></td><td>22.03<i class="delta down">−16.30</i></td><td>38.10<i class="delta down">−11.53</i></td><td>11.61<i class="delta down">+4.51</i></td></tr>
+              <tr><td class="tl">w/o SMG</td><td>60.03<i class="delta down">−1.29</i></td><td>30.52<i class="delta down">−6.65</i></td><td>32.20<i class="delta down">−6.13</i></td><td>37.50<i class="delta down">−12.13</i></td><td>10.32<i class="delta down">+3.22</i></td></tr>
+              <tr><td class="tl">w/o EBV</td><td>59.77<i class="delta down">−1.55</i></td><td>25.81<i class="delta down">−11.36</i></td><td>22.41<i class="delta down">−15.92</i></td><td>40.05<i class="delta down">−9.58</i></td><td>14.84<i class="delta down">+7.74</i></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">Removing any stage worsens every metric; the three stages depend on one another rather than contributing independently. HPE matters most for AF / PE / PCC, SMG mainly secures correct state transitions, and without EBV the extra interactions specified by the state machine go unrepaired — OFR even rises above direct generation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CASE STUDY ============ -->
+  <section class="section" id="cases">
+    <div class="container">
+      <div class="eyebrow reveal">Case Study</div>
+      <h2 class="section-title reveal">Four ways a page can <span class="grad-text">fail an experiment</span>.</h2>
+      <p class="section-sub reveal">Candle combustion and molecular motion, evaluated by replaying the demonstrated operations on pages from six baselines and EduVideo2Code.</p>
+
+      <div class="figure-card reveal zoomable" data-full="static/images/case_study.png" data-caption="Qualitative comparison on two Lab2Sim experiments. Each row shows a key step of the reference video and the state reached in the generated environment after the demonstrated operations are replayed. Stickers mark failure types: blank page (BP), wrong experiment (WE), wrong apparatus (WA), and non-executable operation (NO).">
+        <img src="static/images/case_study.png" alt="Qualitative comparison of generated virtual experiments" loading="lazy" />
+        <span class="zoom-hint">Click to enlarge</span>
+      </div>
+
+      <div class="fail-grid">
+        <div class="fail reveal spot"><div class="fail-tag">BP</div><h4>Blank Rendering</h4><p>A candle-combustion page loads without errors — then renders only “[object Object]”. Technical executability does not guarantee a meaningful scene.</p></div>
+        <div class="fail reveal spot"><div class="fail-tag">WE</div><h4>Experiment Substitution</h4><p>For molecular motion, baselines generate a potassium-permanganate or fuchsine diffusion setup instead of the demonstrated ammonia + phenolphthalein — coherent pages of the wrong experiment.</p></div>
+        <div class="fail reveal spot"><div class="fail-tag">WA</div><h4>Apparatus Mismatch</h4><p>A balance-like stand and a bent tube appear where the video shows a candle, a knife, and crucible tongs — undermining every later interaction.</p></div>
+        <div class="fail reveal spot"><div class="fail-tag">NO</div><h4>Non-Executable Operations</h4><p>Visually plausible scenes where lighting the candle or covering the beaker triggers nothing. EduVideo2Code instead reproduces the demonstrated operations and their states — e.g. the solution turning red after ammonia is added.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CITATION ============ -->
+  <section class="section" id="citation">
+    <div class="container narrow">
+      <div class="eyebrow reveal">Citation</div>
+      <h2 class="section-title reveal">BibTeX</h2>
+      <div class="code-card reveal">
+        <div class="code-head"><span>bibtex</span><button class="copy" data-copy="bibtex">Copy</button></div>
+<pre id="bibtex"><code>@article{hei2026lab2sim,
+  title   = {Lab2Sim: Turning Real-World Experiment Videos into
+             Interactive Virtual Experiments},
+  author  = {Hei, Xusen and Chen, Jiali and Yang, Jinyu and Cai, Yi},
+  journal = {arXiv preprint arXiv:XXXX.XXXXX},
+  year    = {2026}
+}</code></pre>
+      </div>
+      <p class="ack reveal">Lab2Sim sources its videos from public instructional content on Bilibili and YouTube; all apparatus assets in generated pages record their source and license. The benchmark is released for research purposes.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="foot-brand"><span class="brand-mark"><svg viewBox="0 0 32 32"><path fill="currentColor" d="M13 3h6v2h-2v6.2l7.6 13.4A3 3 0 0 1 22 27H10a3 3 0 0 1-2.6-4.4L15 11.2V5h-2V3z"/></svg></span> Lab2Sim</div>
+      <p>© 2026 Lab2Sim Team · South China University of Technology &amp; The Hong Kong Polytechnic University.</p>
+      <p class="muted">Generated virtual experiments are research artifacts and should be reviewed by educators before classroom use.</p>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+    <img id="lbImg" alt="" />
+    <p id="lbCap"></p>
+  </div>
+
+  <script src="static/js/main.js?v=1"></script>
+</body>
+</html>
