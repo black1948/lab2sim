@@ -39,11 +39,17 @@ Demo 页面来源：`../case-study/generated-en/cc-glm-plugin/`（未做任何�
 
 | 位置 | 待填内容 |
 |---|---|
-| Hero `Paper` 按钮 | arXiv abs 链接 |
 | Hero `Dataset` 按钮 | 数据集（HF / GitHub release）URL |
-| `#bibtex` | arXiv 编号（现为 `arXiv:XXXX.XXXXX` 占位） |
 
-已填：GitHub（nav 与 Code 按钮）→ https://github.com/black1948/lab2sim
+已填：GitHub → https://github.com/black1948/lab2sim ｜ arXiv → https://arxiv.org/abs/2611.02928（BibTeX 同步为 `arXiv:2611.02928`）
+
+## 更新发布
+
+```bash
+cd project_page && ./deploy.sh "更新说明"
+```
+
+推送到 `gh-pages` 分支，约 1 分钟后 <https://black1948.github.io/lab2sim/> 生效。
 
 ## 部署到 GitHub Pages
 
