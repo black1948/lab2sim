@@ -24,16 +24,18 @@ project_page/
 │   ├── js/main.js          # 粒子 Hero / 打字机 / 计数器 / 视频懒播放 / 终端动画 / 灯箱
 │   ├── images/             # teaser / bench / method / case_study（论文 PDF 图转 PNG，已裁白边）
 │   └── videos/             # Demo 对比视频
-│       ├── original.mp4    # 原始实验视频（分子运动，来自 sample_case/chemistry/10-分子运动.mp4）
+│       ├── original.mp4    # 原始实验视频（氢气燃烧，来自 v2-runs/30_氢气在空气里燃烧.mp4）
 │       └── simulation.webm # EduVideo2Code 生成页面的浏览器操作录屏（自动录制）
 └── demos/                  # EduVideo2Code 生成的真实虚拟实验（英文版，静态站，可交互）
+    ├── hydrogen-combustion/ # 氢气燃烧（Demo 区展示的 case；v2-runs 产物翻译为英文）
     ├── molecular-motion/   # 分子运动（论文 case study 实验 1）
     ├── candle-combustion/  # 蜡烛燃烧探究（论文 case study 实验 2）
     └── sulfur-combustion/  # 硫在空气/氧气中燃烧
 ```
 
-Demo 页面来源：`../case-study/generated-en/cc-glm-plugin/`（未做任何修改的生成产物 dist）。
-`simulation.webm` 由脚本操作生成页面实录（分子运动实验前 5 步，含酚酞变红）。
+Demo 页面来源：`../case-study/generated-en/cc-glm-plugin/` 与 `../v2-runs/30_氢气在空气里燃烧/app/dist`
+（氢气燃烧 case 的中文 UI 已按实验室 translate_dist 思路整体替换为英文，脚本见 `../scripts/translate_h2_dist.py`）。
+`simulation.webm` 由脚本操作生成页面实录（氢气燃烧完整 4 步：点燃 → 移开火柴 → 罩烧杯 → 水雾 + 成功面板）。
 
 ## 发布前待填（在 index.html 中搜索 `TODO`）
 
