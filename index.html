@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="static/css/style.css?v=1" />
+  <link rel="stylesheet" href="static/css/style.css?v=3" />
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress"></div>
@@ -154,9 +154,9 @@
       <div class="video-duo reveal">
         <figure class="video-card">
           <div class="video-frame">
+            <span class="v-tag src">source video</span>
             <video src="static/videos/original.mp4" controls muted loop playsinline preload="metadata"></video>
           </div>
-          <figcaption><span class="v-tag src">source video</span> Real-world demonstration · hydrogen burning in air</figcaption>
         </figure>
         <div class="duo-arrow" aria-hidden="true">
           <span class="duo-core">Lab2Sim</span>
@@ -164,19 +164,18 @@
         </div>
         <figure class="video-card">
           <div class="video-frame">
+            <span class="v-tag gen">EduVideo2Code output</span>
             <video src="static/videos/simulation.webm" controls muted loop playsinline preload="metadata"></video>
           </div>
-          <figcaption><span class="v-tag gen">EduVideo2Code output</span> Generated interactive experiment · browser screen capture</figcaption>
         </figure>
       </div>
 
       <div class="try-row reveal">
-        <span class="try-label">These pages are real, runnable outputs — try them yourself:</span>
-        <a href="demos/hydrogen-combustion/index.html" target="_blank" rel="noopener">💧 Hydrogen Combustion</a>
-        <a href="demos/molecular-motion/index.html" target="_blank" rel="noopener">🧪 Molecular Motion</a>
-        <a href="demos/candle-combustion/index.html" target="_blank" rel="noopener">🕯️ Candle Combustion</a>
-        <a href="demos/sulfur-combustion/index.html" target="_blank" rel="noopener">🔥 Sulfur Combustion</a>
-        <span class="try-note">open in a new tab · featured case: drag the match, light the hydrogen</span>
+        <a class="try-cta" href="demos/hydrogen-combustion/index.html" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          Try the live experiment yourself
+        </a>
+        <span class="try-note">opens in a new tab · drag the match, light the hydrogen, cover the flame</span>
       </div>
 
       <div class="pipeline reveal">
@@ -418,6 +417,6 @@
     <p id="lbCap"></p>
   </div>
 
-  <script src="static/js/main.js?v=1"></script>
+  <script src="static/js/main.js?v=2"></script>
 </body>
 </html>

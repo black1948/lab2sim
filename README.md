@@ -27,10 +27,7 @@ project_page/
 │       ├── original.mp4    # 原始实验视频（氢气燃烧，来自 v2-runs/30_氢气在空气里燃烧.mp4）
 │       └── simulation.webm # EduVideo2Code 生成页面的浏览器操作录屏（自动录制）
 └── demos/                  # EduVideo2Code 生成的真实虚拟实验（英文版，静态站，可交互）
-    ├── hydrogen-combustion/ # 氢气燃烧（Demo 区展示的 case；v2-runs 产物翻译为英文）
-    ├── molecular-motion/   # 分子运动（论文 case study 实验 1）
-    ├── candle-combustion/  # 蜡烛燃烧探究（论文 case study 实验 2）
-    └── sulfur-combustion/  # 硫在空气/氧气中燃烧
+    └── hydrogen-combustion/ # 氢气燃烧（Demo 区展示 + 试玩 CTA；v2-runs 产物翻译为英文）
 ```
 
 Demo 页面来源：`../case-study/generated-en/cc-glm-plugin/` 与 `../v2-runs/30_氢气在空气里燃烧/app/dist`
